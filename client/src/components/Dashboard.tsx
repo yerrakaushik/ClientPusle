@@ -1,0 +1,543 @@
+import React, { useState } from 'react';
+import { 
+  Building2, 
+  Users, 
+  Calendar, 
+  Brain, 
+  ArrowRight, 
+  Clock, 
+  Sparkles, 
+  ChevronRight, 
+  TrendingUp, 
+  TrendingDown, 
+  ShieldCheck, 
+  Zap, 
+  Target, 
+  DollarSign, 
+  Activity, 
+  Plus, 
+  Settings, 
+  ChevronDown, 
+  Download, 
+  AlertTriangle, 
+  Scale, 
+  MessageCircle,
+  MessageSquare,
+  CheckCircle2
+} from 'lucide-react';
+import type { Client } from '../types/index.js';
+
+interface DashboardProps {
+  clients: Client[];
+  onSelectClient: (clientId: string) => void;
+  totalMemoriesCount: number;
+}
+
+export const Dashboard: React.FC<DashboardProps> = ({
+  clients,
+  onSelectClient,
+  totalMemoriesCount,
+}) => {
+  const [timeRange, setTimeRange] = useState('Last 12 mon');
+  const [showArchitecture, setShowArchitecture] = useState(false);
+  const [hoveredMonth, setHoveredMonth] = useState<number | null>(7); // Default August selected
+
+  const totalInteractions = clients.reduce((acc, c) => acc + (c.interactionCount || 0), 0);
+
+  // Real enterprise manager deal valuations
+  const dealValues: Record<string, { acv: string; stage: string; risk: string; champion: string; trend: string }> = {
+    'acme-corp': { acv: '$1,420,000', stage: 'Negotiation (Stage 4)', risk: 'Downtime Aversion', champion: 'Rahul Sharma (CTIO)', trend: '+14%' },
+    'technova': { acv: '$420,000', stage: 'Proposal Review', risk: 'Security Signoff', champion: 'Ananya Roy (VP Eng)', trend: '+8%' },
+    'greengrid': { acv: '$180,000', stage: 'Technical Discovery', risk: 'Vendor Consensus', champion: 'Vikram Mehta (IoT Lead)', trend: '+5%' },
+    'medicare-plus': { acv: '$540,000', stage: 'Initial Qualification', risk: 'Procurement Delay', champion: 'Dr. Suresh Patil (CMO)', trend: '+12%' },
+    'finedge': { acv: '$720,000', stage: 'Closed Won (Expanding)', risk: 'Expansion Scope', champion: 'Neha Kapoor (Head Fintech)', trend: '+22%' },
+  };
+
+  // 12 Months Graph Data matching Shadcn chart
+  const monthsData = [
+    { month: 'Jan', sales: 32000, target: 30000 },
+    { month: 'Feb', sales: 38000, target: 32000 },
+    { month: 'Mar', sales: 45000, target: 35000 },
+    { month: 'Apr', sales: 41000, target: 36000 },
+    { month: 'May', sales: 49000, target: 40000 },
+    { month: 'Jun', sales: 52000, target: 42000 },
+    { month: 'Jul', sales: 47000, target: 44000 },
+    { month: 'Aug', sales: 54230, target: 45000 },
+    { month: 'Sep', sales: 51000, target: 46000 },
+    { month: 'Oct', sales: 58000, target: 48000 },
+    { month: 'Nov', sales: 62000, target: 50000 },
+    { month: 'Dec', sales: 68000, target: 52000 },
+  ];
+
+  // Recent Sales & Memory Chats matching Shadcn right column
+  const recentDeals = [
+    {
+      name: 'Rahul Sharma',
+      email: 'rahul.s@acme-corp.com',
+      company: 'Acme Corp',
+      clientId: 'acme-corp',
+      amount: '+$1,420,000',
+      status: '90-Day Timeline Priority',
+      badgeColor: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
+      initials: 'RS',
+    },
+    {
+      name: 'Dr. Cynthia Thorne',
+      email: 'c.thorne@vertex-health.org',
+      company: 'Vertex HealthTech',
+      clientId: 'medicare-plus',
+      amount: '+$860,000',
+      status: 'HIPAA Isolation Required',
+      badgeColor: 'bg-cyan-500/10 text-cyan-400 border-cyan-500/20',
+      initials: 'CT',
+    },
+    {
+      name: 'David Sterling',
+      email: 'david@meridian-logistics.com',
+      company: 'Meridian Global',
+      clientId: 'finedge',
+      amount: '+$2,100,000',
+      status: 'Legal SLA Sign-off',
+      badgeColor: 'bg-amber-500/10 text-amber-400 border-amber-500/20',
+      initials: 'DS',
+    },
+    {
+      name: 'Ananya Roy',
+      email: 'ananya.roy@technova.io',
+      company: 'TechNova Cloud',
+      clientId: 'technova',
+      amount: '+$420,000',
+      status: 'Sandbox Proof of Concept',
+      badgeColor: 'bg-purple-500/10 text-purple-400 border-purple-500/20',
+      initials: 'AR',
+    },
+    {
+      name: 'Vikram Mehta',
+      email: 'v.mehta@greengrid.net',
+      company: 'GreenGrid IoT',
+      clientId: 'greengrid',
+      amount: '+$180,000',
+      status: 'Initial RFP Evaluation',
+      badgeColor: 'bg-zinc-800 text-zinc-300 border-zinc-700',
+      initials: 'VM',
+    },
+  ];
+
+  return (
+    <div className="space-y-6 py-6 max-w-7xl mx-auto">
+      {/* Top Header: Business Dashboard Title + Action Buttons (Exact Match to Screenshot) */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h1 className="text-2xl font-bold tracking-tight text-white">
+            Business Dashboard
+          </h1>
+          <p className="text-sm text-zinc-400 mt-1">
+            Monitor your business performance, client relationship memory, and key metrics in real-time
+          </p>
+        </div>
+
+        <div className="flex items-center gap-2.5">
+          {/* + New Sale (White Button) */}
+          <button
+            onClick={() => onSelectClient('acme-corp')}
+            className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-white text-zinc-950 hover:bg-zinc-200 font-semibold text-xs shadow-sm transition-colors"
+          >
+            <Plus className="w-3.5 h-3.5" />
+            <span>+ New Sale</span>
+          </button>
+
+          {/* Actions (Dark Button with Cog Icon) */}
+          <button
+            onClick={() => setShowArchitecture(!showArchitecture)}
+            className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-[#18181b] hover:bg-[#27272a] border border-[#27272a] text-xs font-semibold text-white transition-colors"
+          >
+            <Settings className="w-3.5 h-3.5 text-zinc-400" />
+            <span>Actions</span>
+          </button>
+        </div>
+      </div>
+
+      {/* 4 Clean Metric Cards (Exact Match to Screenshot Layout, Typography & Badges) */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        {/* Card 1: Total Revenue */}
+        <div className="p-6 rounded-xl bg-[#121215] border border-[#27272a] space-y-3">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-medium text-zinc-400">Total Revenue</span>
+            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-medium bg-[#1c1c21] text-zinc-300">
+              <TrendingUp className="w-3 h-3 text-emerald-400" />
+              +12%
+            </span>
+          </div>
+          <div>
+            <div className="text-3xl font-extrabold text-white tracking-tight">
+              $54,230
+            </div>
+            <div className="text-xs font-medium text-zinc-300 mt-2 flex items-center gap-1">
+              <span>Trending up this month</span>
+              <span className="text-emerald-400">↗</span>
+            </div>
+            <div className="text-[11px] text-zinc-500 mt-0.5">
+              Revenue for the last 6 months
+            </div>
+          </div>
+        </div>
+
+        {/* Card 2: Active Customers */}
+        <div className="p-6 rounded-xl bg-[#121215] border border-[#27272a] space-y-3">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-medium text-zinc-400">Active Customers</span>
+            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-medium bg-[#1c1c21] text-zinc-300">
+              <TrendingUp className="w-3 h-3 text-emerald-400" />
+              +5.2%
+            </span>
+          </div>
+          <div>
+            <div className="text-3xl font-extrabold text-white tracking-tight">
+              2,350
+            </div>
+            <div className="text-xs font-medium text-zinc-300 mt-2 flex items-center gap-1">
+              <span>Strong user retention</span>
+              <span className="text-emerald-400">↗</span>
+            </div>
+            <div className="text-[11px] text-zinc-500 mt-0.5">
+              Engagement exceeds targets
+            </div>
+          </div>
+        </div>
+
+        {/* Card 3: Total Orders */}
+        <div className="p-6 rounded-xl bg-[#121215] border border-[#27272a] space-y-3">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-medium text-zinc-400">Total Orders</span>
+            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-medium bg-[#1c1c21] text-zinc-300">
+              <TrendingDown className="w-3 h-3 text-rose-400" />
+              -2.1%
+            </span>
+          </div>
+          <div>
+            <div className="text-3xl font-extrabold text-white tracking-tight">
+              1,247
+            </div>
+            <div className="text-xs font-medium text-zinc-300 mt-2 flex items-center gap-1">
+              <span>Down 2% this period</span>
+              <span className="text-rose-400">↘</span>
+            </div>
+            <div className="text-[11px] text-zinc-500 mt-0.5">
+              Order volume needs attention
+            </div>
+          </div>
+        </div>
+
+        {/* Card 4: Conversion Rate */}
+        <div className="p-6 rounded-xl bg-[#121215] border border-[#27272a] space-y-3">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-medium text-zinc-400">Conversion Rate</span>
+            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-medium bg-[#1c1c21] text-zinc-300">
+              <TrendingUp className="w-3 h-3 text-emerald-400" />
+              +8.3%
+            </span>
+          </div>
+          <div>
+            <div className="text-3xl font-extrabold text-white tracking-tight">
+              3.24%
+            </div>
+            <div className="text-xs font-medium text-zinc-300 mt-2 flex items-center gap-1">
+              <span>Steady performance increase</span>
+              <span className="text-emerald-400">↗</span>
+            </div>
+            <div className="text-[11px] text-zinc-500 mt-0.5">
+              Meets conversion projections
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Explainer / Actions Drawer */}
+      {showArchitecture && (
+        <div className="p-5 rounded-xl bg-[#121215] border border-[#27272a] space-y-3 animate-in fade-in duration-150">
+          <div className="flex items-center justify-between border-b border-[#27272a] pb-2.5">
+            <span className="text-xs font-bold text-white flex items-center gap-2">
+              <Brain className="w-4 h-4 text-emerald-400" />
+              Vectorize Hindsight Memory Core Actions
+            </span>
+            <span className="text-[10px] font-mono text-zinc-400">Live Bank: hok-acme-corp</span>
+          </div>
+          <p className="text-xs text-zinc-300 leading-relaxed">
+            ClientPulse AI remembers past meeting rejections, timeline pivots (90-day requirement), and stakeholder nuances using <code>retain()</code>, <code>recall()</code>, and <code>reflect()</code>.
+          </p>
+        </div>
+      )}
+
+      {/* Two Column Grid: Interactive Sales Performance Graph (Left) & Recent Deals / Chats (Right) */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Left Column (2 Cols): Interactive Sales Performance Graph */}
+        <div className="lg:col-span-2 p-6 rounded-xl bg-[#121215] border border-[#27272a] space-y-5">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#27272a] pb-4">
+            <div>
+              <div className="flex items-center gap-2">
+                <h2 className="text-base font-bold text-white tracking-tight">Sales Performance</h2>
+                <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                  +12.9% vs Target
+                </span>
+              </div>
+              <p className="text-xs text-zinc-400 mt-0.5">
+                Monthly sales vs targets across enterprise accounts
+              </p>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <div className="flex items-center gap-3 text-xs text-zinc-400 mr-2">
+                <span className="flex items-center gap-1.5">
+                  <span className="w-2.5 h-2.5 rounded-sm bg-white inline-block" /> Actual
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <span className="w-2.5 h-2.5 rounded-sm bg-zinc-700 inline-block" /> Target
+                </span>
+              </div>
+              <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#18181b] border border-[#27272a] text-xs text-zinc-300 hover:text-white transition-colors">
+                <span>{timeRange}</span>
+                <ChevronDown className="w-3 h-3 text-zinc-400" />
+              </button>
+              <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#18181b] border border-[#27272a] text-xs text-zinc-300 hover:text-white transition-colors">
+                <Download className="w-3 h-3" />
+                <span>Export</span>
+              </button>
+            </div>
+          </div>
+
+          {/* Dynamic Tooltip on Hover */}
+          {hoveredMonth !== null && (
+            <div className="p-3 rounded-lg bg-[#18181b] border border-[#27272a] flex items-center justify-between text-xs animate-in fade-in duration-100">
+              <div className="flex items-center gap-2">
+                <Calendar className="w-3.5 h-3.5 text-zinc-400" />
+                <span className="font-bold text-white">{monthsData[hoveredMonth].month} Performance:</span>
+                <span className="text-white font-mono font-bold">${monthsData[hoveredMonth].sales.toLocaleString()}</span>
+                <span className="text-zinc-500">vs target ${monthsData[hoveredMonth].target.toLocaleString()}</span>
+              </div>
+              <span className="text-[11px] font-semibold text-emerald-400">
+                +{(
+                  ((monthsData[hoveredMonth].sales - monthsData[hoveredMonth].target) /
+                    monthsData[hoveredMonth].target) *
+                  100
+                ).toFixed(1)}
+                % Outperformed
+              </span>
+            </div>
+          )}
+
+          {/* Interactive Dual-Bar Chart */}
+          <div className="relative h-64 pt-6 flex items-end gap-3 px-2 border-b border-[#27272a]">
+            {/* Horizontal Grid lines */}
+            <div className="absolute inset-0 flex flex-col justify-between pointer-events-none opacity-20">
+              <div className="border-b border-zinc-700 w-full" />
+              <div className="border-b border-zinc-700 w-full" />
+              <div className="border-b border-zinc-700 w-full" />
+              <div className="border-b border-zinc-700 w-full" />
+            </div>
+
+            {monthsData.map((d, i) => {
+              const maxVal = 70000;
+              const salesPct = Math.round((d.sales / maxVal) * 100);
+              const targetPct = Math.round((d.target / maxVal) * 100);
+              const isSelected = hoveredMonth === i;
+
+              return (
+                <div
+                  key={i}
+                  onMouseEnter={() => setHoveredMonth(i)}
+                  className="flex-1 flex flex-col items-center h-full justify-end cursor-pointer group relative"
+                >
+                  <div className="w-full flex items-end justify-center gap-1 h-full pb-2">
+                    {/* Target Bar (Muted) */}
+                    <div
+                      className="w-1/2 max-w-[12px] bg-zinc-700/60 rounded-t-sm transition-all"
+                      style={{ height: `${targetPct}%` }}
+                    />
+                    {/* Actual Sales Bar (White/Highlighted) */}
+                    <div
+                      className={`w-1/2 max-w-[12px] rounded-t-sm transition-all ${
+                        isSelected
+                          ? 'bg-emerald-400 shadow-md shadow-emerald-500/20'
+                          : 'bg-white group-hover:bg-zinc-200'
+                      }`}
+                      style={{ height: `${salesPct}%` }}
+                    />
+                  </div>
+                  <span
+                    className={`text-[11px] font-medium transition-colors ${
+                      isSelected ? 'text-white font-bold' : 'text-zinc-500'
+                    }`}
+                  >
+                    {d.month}
+                  </span>
+                </div>
+              );
+            })}
+          </div>
+
+          <div className="flex items-center justify-between text-xs text-zinc-400 pt-1">
+            <span>YTD Total: <strong>$599,230</strong> across all active pipelines</span>
+            <span className="text-zinc-500 font-mono text-[11px]">Hover over any month to inspect details</span>
+          </div>
+        </div>
+
+        {/* Right Column (1 Col): Recent Sales & Live Relationship Touchpoints (Matches Screenshot) */}
+        <div className="p-6 rounded-xl bg-[#121215] border border-[#27272a] space-y-5 flex flex-col">
+          <div className="flex items-center justify-between border-b border-[#27272a] pb-3">
+            <div>
+              <h3 className="text-base font-bold text-white tracking-tight">Recent Sales & Chats</h3>
+              <p className="text-xs text-zinc-400 mt-0.5">Live memory touchpoints from buying committees</p>
+            </div>
+            <MessageSquare className="w-4 h-4 text-emerald-400" />
+          </div>
+
+          <div className="space-y-4 flex-1 overflow-y-auto max-h-[340px] pr-1">
+            {recentDeals.map((deal, idx) => (
+              <div
+                key={idx}
+                onClick={() => onSelectClient('acme-corp')}
+                className="flex items-center justify-between p-2.5 rounded-xl hover:bg-[#18181b] border border-transparent hover:border-[#27272a] transition-all cursor-pointer group"
+              >
+                <div className="flex items-center gap-3 min-w-0">
+                  <div className="w-8 h-8 rounded-full bg-zinc-800 border border-zinc-700 flex items-center justify-center text-xs font-bold text-white shrink-0 group-hover:border-zinc-500">
+                    {deal.initials}
+                  </div>
+                  <div className="min-w-0 leading-tight">
+                    <span className="block text-xs font-semibold text-white truncate group-hover:text-emerald-400 transition-colors">
+                      {deal.name}
+                    </span>
+                    <span className="block text-[11px] text-zinc-400 truncate">
+                      {deal.email}
+                    </span>
+                    <span className={`inline-block mt-1 text-[10px] font-medium px-1.5 py-0.2 rounded border ${deal.badgeColor}`}>
+                      {deal.status}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="text-right shrink-0 pl-2">
+                  <span className="text-xs font-bold text-white block font-mono">{deal.amount}</span>
+                  <span className="text-[10px] text-zinc-500 block">{deal.company}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <button
+            onClick={() => onSelectClient('acme-corp')}
+            className="w-full py-2.5 rounded-lg bg-[#18181b] hover:bg-[#27272a] border border-[#27272a] text-xs font-semibold text-white flex items-center justify-center gap-2 transition-colors"
+          >
+            <span>Open Acme War Room Chat</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </button>
+        </div>
+      </div>
+
+      {/* Enterprise Accounts War Room Roster */}
+      <div className="p-6 rounded-xl bg-[#121215] border border-[#27272a] space-y-4">
+        <div className="flex items-center justify-between border-b border-[#27272a] pb-3">
+          <div>
+            <h3 className="text-sm font-bold text-white uppercase tracking-wider">
+              Strategic Accounts War Rooms
+            </h3>
+            <p className="text-xs text-zinc-400 mt-0.5">
+              Click any account to access grounded pre-call briefs, timeline audit trails, and Hindsight banks.
+            </p>
+          </div>
+          <span className="text-xs font-medium text-emerald-400">
+            5 Accounts Active
+          </span>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {clients.map((client) => {
+            const isAcme = client.id === 'acme-corp';
+            const deal = dealValues[client.id] || { acv: '$500,000', stage: client.status, risk: 'Procurement Delay', champion: client.contactName };
+
+            return (
+              <div
+                key={client.id}
+                onClick={() => onSelectClient(client.id)}
+                className={`p-4 rounded-xl border cursor-pointer transition-colors ${
+                  isAcme
+                    ? 'bg-[#18181b] border-zinc-500 hover:border-zinc-400'
+                    : 'bg-[#141418] border-[#27272a] hover:border-zinc-600'
+                }`}
+              >
+                <div className="flex items-start justify-between gap-2">
+                  <div>
+                    <div className="flex items-center gap-1.5">
+                      <h4 className="text-xs font-bold text-white">{client.companyName}</h4>
+                      {isAcme && (
+                        <span className="text-[9px] font-extrabold px-1.5 py-0.2 rounded bg-white text-zinc-950">
+                          PRIMARY
+                        </span>
+                      )}
+                    </div>
+                    <span className="text-[11px] text-zinc-400 block mt-0.5">{client.industry}</span>
+                  </div>
+                  <span className={`text-[10px] font-medium px-2 py-0.5 rounded border ${
+                    client.status === 'Negotiation' ? 'bg-amber-500/10 text-amber-400 border-amber-500/20' :
+                    client.status === 'Closed Won' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' :
+                    'bg-zinc-800 text-zinc-300 border-zinc-700'
+                  }`}>
+                    {client.status}
+                  </span>
+                </div>
+
+                <div className="mt-3 p-2.5 rounded-lg bg-[#0d0d10] border border-[#27272a]/60 text-xs text-zinc-400 space-y-1.5">
+                  <div className="flex justify-between">
+                    <span>ACV Value:</span>
+                    <strong className="text-white font-mono">{deal.acv}</strong>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Champion:</span>
+                    <span className="text-zinc-200">{deal.champion}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Core Hurdle:</span>
+                    <span className="text-amber-400 font-medium truncate max-w-[150px]">{deal.risk}</span>
+                  </div>
+                  <div className="flex justify-between border-t border-[#27272a]/40 pt-1 text-[11px]">
+                    <span className="flex items-center gap-1">
+                      <Calendar className="w-3 h-3 text-zinc-500" />
+                      Next Call:
+                    </span>
+                    <span className="text-zinc-300">{client.nextMeeting}</span>
+                  </div>
+                </div>
+
+                <div className="mt-3 pt-2 border-t border-[#27272a] flex items-center justify-between text-xs text-zinc-300 font-medium">
+                  <span className="text-[11px] font-mono text-zinc-500 flex items-center gap-1">
+                    <Brain className="w-3 h-3 text-emerald-400" />
+                    hok-{client.id}
+                  </span>
+                  <span className="flex items-center gap-1 text-white hover:text-emerald-400 transition-colors">
+                    Enter War Room
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </span>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Floating Bottom Right Pill Widget matching Screenshot (Upgrade to Pro & Chat) */}
+      <div className="fixed bottom-5 right-5 z-20 flex items-center gap-2">
+        <button
+          onClick={() => onSelectClient('acme-corp')}
+          className="px-3.5 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 text-xs font-semibold text-white shadow-lg transition-colors flex items-center gap-2"
+        >
+          <span>Upgrade to Pro</span>
+        </button>
+        <button
+          onClick={() => onSelectClient('acme-corp')}
+          className="w-9 h-9 rounded-full bg-white text-zinc-950 flex items-center justify-center shadow-xl hover:scale-105 transition-transform"
+        >
+          <MessageCircle className="w-4 h-4 fill-current" />
+        </button>
+      </div>
+    </div>
+  );
+};

@@ -1,0 +1,24 @@
+{
+  "name": "clientpulse-ai",
+  "version": "1.0.0",
+  "private": true,
+  "description": "ClientPulse AI — Your AI Client Relationship Memory (HackwithHyderabad 3.0)",
+  "scripts": {
+    "dev:server": "npm --prefix server run dev",
+    "dev:client": "npm --prefix client run dev",
+    "seed": "npm --prefix server run seed",
+    "build:server": "npm --prefix server run build",
+    "build:client": "npm --prefix client run build",
+    "build": "npm run build:server && npm run build:client"
+  },
+  "keywords": [
+    "hindsight",
+    "ai-agent",
+    "crm",
+    "memory",
+    "vectorize",
+    "hackathon"
+  ],
+  "author": "HackwithHyderabad Team",
+  "license": "MIT"
+}
