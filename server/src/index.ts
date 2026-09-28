@@ -3,6 +3,7 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import path from 'node:path';
+import fs from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import clientRoutes from './routes/clientRoutes.js';
 import { hindsightService } from './services/hindsightService.js';
@@ -34,22 +35,44 @@ app.use((req, res, next) => {
 // API Routes
 app.use('/api', clientRoutes);
 
-// Root greeting & status
-app.get('/', (req, res) => {
-  res.json({
-    app: 'ClientPulse AI API',
-    tagline: 'Your AI client relationship memory.',
-    version: '1.0.0',
-    hindsight: hindsightService.getStatus(),
-    llm: {
-      configured: llmService.isConfigured(),
-      model: llmService.getModelName(),
-    },
-    documentation: 'See README.md for endpoint specifications',
-  });
-});
+// Resolve path to compiled client frontend
+const possibleDistPaths = [
+  path.resolve(__dirname, '../../client/dist'),
+  path.resolve(__dirname, '../client/dist'),
+  path.resolve(process.cwd(), 'client/dist'),
+  path.resolve(process.cwd(), '../client/dist'),
+  path.resolve(__dirname, '../public'),
+  path.resolve(process.cwd(), 'public'),
+];
 
-// 404 handler
+const clientDistPath = possibleDistPaths.find(p => fs.existsSync(p) && fs.existsSync(path.join(p, 'index.html')));
+
+if (clientDistPath) {
+  console.log(`[Static] Serving ClientPulse frontend from: ${clientDistPath}`);
+  app.use(express.static(clientDistPath));
+  app.get('*', (req, res, next) => {
+    if (req.path.startsWith('/api')) return next();
+    res.sendFile(path.join(clientDistPath, 'index.html'));
+  });
+} else {
+  // Root greeting & status if frontend is hosted separately
+  app.get('/', (req, res) => {
+    res.json({
+      app: 'ClientPulse AI API',
+      tagline: 'Your AI client relationship memory.',
+      version: '1.0.0',
+      status: 'online',
+      hindsight: hindsightService.getStatus(),
+      llm: {
+        configured: llmService.isConfigured(),
+        model: llmService.getModelName(),
+      },
+      documentation: 'See README.md for endpoint specifications',
+    });
+  });
+}
+
+// 404 handler for API routes
 app.use((req, res) => {
   res.status(404).json({ success: false, error: `Route not found: ${req.method} ${req.url}` });
 });

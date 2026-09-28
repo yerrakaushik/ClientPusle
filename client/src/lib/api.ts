@@ -1,15 +1,40 @@
+/// <reference types="vite/client" />
 import type { Client, Interaction, MeetingBrief, MemoryPanelData, ChatMessage, SystemStatus } from '../types/index.js';
 
-const API_BASE = '/api';
+const getApiBase = () => {
+  const env = (import.meta as any).env || {};
+  if (env.VITE_API_URL) {
+    return env.VITE_API_URL.replace(/\/+$/, '') + '/api';
+  }
+  if (typeof window !== 'undefined') {
+    const host = window.location.hostname;
+    // If hosted on a static domain (Vercel, Netlify, GitHub Pages, Render static) and not on the Render backend itself:
+    if (host !== 'localhost' && host !== '127.0.0.1' && !host.includes('clientpusle.onrender.com')) {
+      return 'https://clientpusle.onrender.com/api';
+    }
+  }
+  return '/api';
+};
+
+const API_BASE = getApiBase();
 
 async function fetchJson<T>(url: string, options?: RequestInit): Promise<T> {
-  const res = await fetch(`${API_BASE}${url}`, {
+  const fullUrl = `${API_BASE}${url}`;
+  const res = await fetch(fullUrl, {
     headers: {
       'Content-Type': 'application/json',
       ...options?.headers,
     },
     ...options,
   });
+
+  const contentType = res.headers.get('content-type') || '';
+  if (!contentType.includes('application/json')) {
+    const rawText = await res.text();
+    throw new Error(
+      `API endpoint returned non-JSON response (${res.status}): ${rawText.slice(0, 120)}`
+    );
+  }
 
   const data = await res.json();
   if (!res.ok || data.success === false) {

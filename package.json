@@ -9,7 +9,9 @@
     "seed": "npm --prefix server run seed",
     "build:server": "npm --prefix server run build",
     "build:client": "npm --prefix client run build",
-    "build": "npm run build:server && npm run build:client"
+    "build": "npm run build:client && npm run build:server",
+    "start": "node server/dist/index.js",
+    "postinstall": "npm --prefix server install && npm --prefix client install"
   },
   "keywords": [
     "hindsight",
