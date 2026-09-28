@@ -257,11 +257,12 @@ export function Compose({
       const caretLineTop = c.y - ta.scrollTop;
       const rect = ta.getBoundingClientRect();
       const lineBottomVp = rect.top + caretLineTop + c.lineHeight;
-      const flip = window.innerHeight - lineBottomVp < 252 && caretLineTop > 120;
+      // In a bottom-anchored chat input, always flip upwards so dropdown never clips off bottom of screen
+      const flip = true;
       setMenu({
-        x: c.x - ta.scrollLeft,
+        x: Math.min(Math.max(8, c.x - ta.scrollLeft), Math.max(8, (ta.offsetWidth || 300) - 280)),
         top: caretLineTop + c.lineHeight + 6,
-        bottom: ta.offsetHeight - caretLineTop + 6,
+        bottom: (ta.offsetHeight || 96) + 12,
         flip,
       });
       setActive(0);
@@ -456,7 +457,11 @@ export function Compose({
             <Kbd>/</Kbd><span>hindsight actions</span>
           </div>
           <div className="flex items-center gap-3">
-            {maxLength != null && text.length > 0 && <CounterRing value={text.length} max={maxLength} />}
+            {maxLength != null && text.length >= maxLength * 0.85 && (
+              <span className="text-[11px] font-mono text-zinc-400">
+                {text.length}/{maxLength}
+              </span>
+            )}
             <button
               type="button"
               onClick={submit}

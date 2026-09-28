@@ -100,17 +100,17 @@ export const AIAssistant: React.FC<AIAssistantProps> = ({
   };
 
   return (
-    <div className="flex flex-col h-[700px] glass-panel rounded-3xl border border-white/[0.08] overflow-hidden shadow-2xl">
+    <div className="flex flex-col h-[calc(100vh-170px)] min-h-[480px] max-h-[720px] rounded-2xl bg-[#0f0f12] border border-[#27272a] overflow-hidden shadow-2xl">
       {/* Top Banner */}
-      <div className="px-6 py-4 border-b border-white/[0.08] bg-obsidian-900/90 flex items-center justify-between">
+      <div className="px-5 py-3 border-b border-[#27272a] bg-[#121215] flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-xl bg-aurora/10 border border-aurora/30 flex items-center justify-center text-aurora font-bold shadow-sm">
-            <Bot className="w-5 h-5" />
+          <div className="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 font-bold shadow-sm">
+            <Bot className="w-4 h-4" />
           </div>
           <div>
             <h3 className="text-sm font-bold text-white flex items-center gap-2">
               Relationship Copilot
-              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-aurora/15 text-aurora border border-aurora/30">
+              <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
                 Ground Truth Active
               </span>
             </h3>
@@ -144,14 +144,15 @@ export const AIAssistant: React.FC<AIAssistantProps> = ({
               <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
                 Executive Quick Prompts:
               </span>
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-1.5">
                 {suggestedQuestions.map((q, i) => (
                   <button
                     key={i}
                     onClick={() => handleSend(q)}
-                    className="text-left px-3.5 py-2.5 rounded-xl bg-obsidian-850 hover:bg-obsidian-800 border border-white/[0.08] hover:border-aurora/30 text-xs text-slate-300 hover:text-aurora transition-all"
+                    className="text-left px-3 py-2 rounded-lg bg-[#18181b] hover:bg-[#27272a] border border-[#27272a] hover:border-emerald-500/40 text-xs text-zinc-300 hover:text-white transition-all flex items-center justify-between group"
                   >
-                    "{q}"
+                    <span>"{q}"</span>
+                    <span className="text-[10px] text-zinc-500 group-hover:text-emerald-400 font-mono">↵ ask</span>
                   </button>
                 ))}
               </div>
