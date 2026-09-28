@@ -1,256 +1,194 @@
-# ClientPulse AI
+# 🧠 ClientPulse AI — Enterprise Relationship Memory Engine
+### *AI Agents That Learn Using Hindsight • HackwithHyderabad 3.0 (Microsoft)*
 
-> **"Your AI client relationship memory."**  
-> *Built for Microsoft HackwithHyderabad 3.0 • Vectorize Hindsight Challenge Track*
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.7-blue?logo=typescript)](https://www.typescriptlang.org/)
+[![React](https://img.shields.io/badge/React-18.3-61DAFB?logo=react)](https://react.dev/)
+[![TailwindCSS](https://img.shields.io/badge/Tailwind-3.4-38B2AC?logo=tailwind-css)](https://tailwindcss.com/)
+[![Vectorize Hindsight](https://img.shields.io/badge/Memory-Hindsight_Cloud-00DF8F)](https://hindsight.vectorize.io)
+[![Groq](https://img.shields.io/badge/Inference-Groq_Llama--3.3_/_GPT--OSS--120B-F55036)](https://groq.com)
+[![Vite](https://img.shields.io/badge/Build-Vite_6.0-646CFF?logo=vite)](https://vitejs.dev/)
 
-[![Hindsight Memory](https://img.shields.io/badge/Memory-Vectorize%20Hindsight-6366f1.svg)](https://hindsight.vectorize.io/)
-[![TypeScript](https://img.shields.io/badge/Language-TypeScript-blue.svg)](https://www.typescriptlang.org/)
-[![License](https://img.shields.io/badge/License-MIT-emerald.svg)](LICENSE)
-
----
-
-## 1. Executive Summary & Problem
-
-In enterprise B2B sales and account management, client relationships evolve across dozens of meetings, calls, proposals, and objections over quarters. Crucial context—such as why an earlier pricing tier was rejected, which migration strategy received buy-in, or what compliance documentation was mandated—gets buried across disconnected CRM notes, email threads, and Slack messages.
-
-### The Problem with Stateless AI
-Standard conversational AI assistants treat every client meeting independently. They don't know:
-- Why **Acme Corp** rejected a proposal 3 weeks ago.
-- That the client was receptive to a **three-phase rollout** with sandbox isolation.
-- That the customer just called with a new constraint: **a strict 90-day implementation deadline**.
-
-### The Solution: ClientPulse AI
-**ClientPulse AI** integrates **Vectorize Hindsight** as an intelligent, long-term cognitive memory layer. It retains durable client facts, preferences, objections, and negotiation outcomes. When preparing a sales rep for an upcoming call or answering ad-hoc deal queries, it performs **semantic recall** and **agentic reflection** to formulate adaptive, winning recommendations.
+> **ClientPulse AI** is an autonomous B2B client relationship intelligence platform powered by **Vectorize Hindsight persistent cognitive memory**. Unlike stateless LLMs and naive RAG architectures that repeat costly mistakes across client meetings, ClientPulse retains experiential memories across every call, chat, and deal touchpoint—automatically recalling what strategies win, what provokes rejection, and adapting sales strategies in real time.
 
 ---
 
-## 2. Why Hindsight is Central to the Architecture
+## 🌟 The Core Problem in Enterprise Client Management
 
-ClientPulse AI does **not** treat memory as a static vector cache. Instead, it utilizes the official `@vectorize-io/hindsight-client` across three primary memory primitives:
+In high-stakes B2B enterprise negotiations ($200k – $1.5M+ deals), deals fail not from lack of product features, but from **repeated cognitive mistakes**:
+* **Repeated Landmines:** Account executives inadvertently suggest open-ended cutover timelines or generic rate decks that previously provoked furious stakeholder rejection.
+* **Stateless Amnesia:** Traditional CRM chatbots treat every meeting as a blank slate. They forget subtle objections voiced 3 months ago by key decision makers.
+* **Naive RAG Failure:** Standard semantic search retrieves raw document chunks without understanding *causal outcomes* (e.g. *"Why did the Technical Review Board veto our initial architecture?"*).
 
-```
-                  ┌─────────────────────────────────────────┐
-                  │             ClientPulse AI              │
-                  │        (Enterprise Sales Copilot)       │
-                  └───────────────────┬─────────────────────┘
-                                      │
-            ┌─────────────────────────┼─────────────────────────┐
-            ▼                         ▼                         ▼
-   1. retain()               2. recall()               3. reflect()
-─────────────────────     ─────────────────────     ─────────────────────
-Durable Interaction       Sub-100ms Semantic        Agentic Reasoning
-Retention                 Lookup                    Over Trajectory
-• Objections & rejections • Grounded Q&A            • Strategic Synthesis
-• Architectural approvals • Context for Brief       • Adaptive pivots
-• Rep outcome feedback    • Memory sources log      • Risk assessments
-```
-
-### The 3 Core Hindsight Primitives Used:
-1. **`client.retain(bankId, content, options)`**:
-   - Every meeting, call, proposal, or note is structured into durable relationship facts and committed to the client's isolated memory bank (e.g., `clientpulse-acme-corp`).
-   - Human-in-the-loop feedback (`[Helpful]` / `[Not Helpful]`) is retained as corrective rules for future reasoning.
-2. **`client.recall(bankId, query, options)`**:
-   - Sub-100ms retrieval of historical objections, past commitments, and successful approaches.
-   - Grounded Q&A in the Copilot chat with zero hallucination.
-3. **`client.reflect(bankId, query, options)`**:
-   - Synthesizes strategic conclusions: *"How should we approach the next meeting based on past outcomes and client feedback?"*
+### 💡 The Solution: Hindsight-Powered Experiential Learning
+ClientPulse leverages **Vectorize Hindsight**'s three-tier cognitive memory architecture:
+1. **`Retain` (Experiential Ingestion):** Ingests raw meeting transcripts, client pushback, budget changes, and stakeholder preferences with automatic causal extraction.
+2. **`Recall` (Temporal & Contextual Retrieval):** When prepping for a high-stakes call, retrieves relevant historical lessons, past objections, and proven winning strategies without hallucination.
+3. **`Reflect` (High-Order Synthesis):** Synthesizes cross-meeting patterns into executive meeting briefs, risk warnings, and buying committee sentiment maps.
+4. **Human-in-the-Loop Feedback:** When an account executive corrects or downvotes a proposal, the correction is permanently committed into Hindsight memory so the mistake is **never repeated**.
 
 ---
 
-## 3. Architecture & Data Model
+## 🚀 Key Features & Architectural Highlights
 
 ```
-clientpulse-ai/
-├── client/                      # React 18 + Vite + Tailwind CSS Frontend
-│   ├── src/
-│   │   ├── components/
-│   │   │   ├── Header.tsx             # Live Hindsight status & Demo Trigger
-│   │   │   ├── Dashboard.tsx          # Client cards & deal metrics
-│   │   │   ├── ClientWorkspace.tsx    # Header & 5 functional tabs
-│   │   │   ├── InteractionsTimeline.tsx# Log interactions & live retain
-│   │   │   ├── AIAssistant.tsx        # Grounded chat with memory sources
-│   │   │   ├── MeetingBriefView.tsx   # Executive Briefing & feedback loop
-│   │   │   ├── MemoryPanel.tsx        # Visual Hindsight entity inspector
-│   │   │   ├── DemoModal.tsx          # 60-Second Guided Hackathon Demo
-│   │   │   ├── FeedbackModal.tsx      # Outcome learning loop
-│   │   │   └── Toast.tsx              # Reactive notifications
-│   │   ├── lib/api.ts                 # Typed REST Client
-│   │   └── types/index.ts
-│   └── package.json
-│
-├── server/                      # Express + Node.js + TypeScript Backend
-│   ├── src/
-│   │   ├── services/
-│   │   │   ├── hindsightService.ts    # Official HindsightClient SDK logic
-│   │   │   ├── llmService.ts          # Groq SDK / Grounded reasoning
-│   │   │   └── clientService.ts       # Orchestration layer
-│   │   ├── controllers/clientController.ts
-│   │   ├── routes/clientRoutes.ts
-│   │   ├── data/store.ts              # Lightweight persistent store
-│   │   ├── seed/seedData.ts           # Idempotent seeding mechanism
-│   │   └── index.ts                   # Express server entrypoint
-│   └── package.json
-│
-├── .env.example
-├── .env
-├── README.md
-└── package.json
+                      ┌──────────────────────────────────────────────┐
+                      │          ClientPulse AI Frontend             │
+                      │  (React 18 + Tailwind + Framer Motion)       │
+                      └──────────────────────┬───────────────────────┘
+                                             │ REST API
+                                             ▼
+                      ┌──────────────────────────────────────────────┐
+                      │          Express API & Orchestrator          │
+                      └──────────────┬────────────────┬──────────────┘
+                                     │                │
+             ┌───────────────────────┴──────┐  ┌──────┴──────────────────────┐
+             │ Vectorize Hindsight Cloud    │  │ Groq High-Speed LLM Engine   │
+             │ Persistent Multi-Bank Memory │  │ (openai/gpt-oss-120b)        │
+             │ • retain() • recall()        │  │ • Adaptive Brief Generation  │
+             │ • reflect()                  │  │ • Zero-Latency Copilot Chat  │
+             └──────────────────────────────┘  └─────────────────────────────┘
 ```
 
-### Memory Bank Isolation
-To prevent cross-tenant data leakage, each client account receives an isolated memory bank:
-- Acme Corp: `clientpulse-acme-corp`
-- TechNova: `clientpulse-technova`
-- GreenGrid: `clientpulse-greengrid`
+- **Interactive Executive Dashboard:**
+  - 12-month deal pipeline analytics with target comparisons and hover inspection.
+  - Multi-account portfolio health overview across 5 enterprise accounts with real deal valuations ($1.4M Acme Corp, $420k TechNova, $180k GreenGrid, $540k MediCare Plus, $720k FinEdge).
+- **Deep Account Workspace:**
+  - **Account Dossier:** Visualizes *"What Wins with This Account"* vs. *"What Provokes Rejection"*.
+  - **Buying Committee Map:** Key stakeholder alignment, rapport scores, and internal approval gates (CTIO, Technical Review Board, Procurement).
+  - **Touchpoint Ledger:** Real-time logging of client calls, emails, and meetings with automatic Hindsight retention.
+  - **Hindsight Copilot:** Grounded relationship AI assistant that answers nuanced questions using retained memory without hallucination.
+  - **Adaptive Meeting Brief:** Executive dossier with recommended talking points, traps to avoid, and live human feedback integration.
+  - **Memory Bank Visualizer:** Direct inspection of memories stored in Vectorize Hindsight Cloud with memory strength, type, and bank IDs.
+- **Collapsible Enterprise Sidebar:**
+  - Zero-lag responsive collapse mechanism with quick account switcher.
+  - Interactive Sarah Jenkins profile modal with live cloud connectivity status and one-click baseline data reset.
 
 ---
 
-## 4. Setup & Running Locally
+## 🎬 4-Step Hackathon Demo Scenario
+
+Experience the hindsight learning loop in under 90 seconds:
+
+| Step | Action | What Happens Under the Hood |
+| :--- | :--- | :--- |
+| **1. Baseline Risk** | Open **Acme Corp** Account Dossier | Notice Acme previously rejected a proposal due to generic boilerplate pricing. |
+| **2. Memory Recall** | Ask Copilot: *"Why did Acme reject our previous proposal?"* | The Copilot performs a Hindsight `recall()` and accurately explains the rejection without hallucination. |
+| **3. Pivot Ingestion** | Log Call: *"Acme urgently needs implementation within 90 days."* | System calls Hindsight `retain()` to permanently commit the 90-day requirement to memory. |
+| **4. Adaptive Brief** | Click **Generate Meeting Brief** | The brief immediately adapts talking points and timelines to prioritize the 90-day window! |
+
+---
+
+## 🛠️ Technology Stack
+
+| Layer | Technologies Used |
+| :--- | :--- |
+| **Frontend** | React 18, TypeScript, TailwindCSS, Lucide Icons, Framer Motion, Vite |
+| **Backend** | Node.js, Express, TypeScript, tsx |
+| **Cognitive Memory** | Vectorize Hindsight SDK (`@vectorize-io/hindsight-client`) |
+| **LLM Inference** | Groq SDK (`groq-sdk`), Model: `openai/gpt-oss-120b` / `llama-3.3-70b` |
+| **Data Persistence** | Dual-tier store (Local atomic JSON store + Live Hindsight Cloud Banks) |
+
+---
+
+## ⚡ Quickstart & Local Setup
 
 ### Prerequisites
-- **Node.js**: v18+ (tested on Node v24)
-- **npm**: v9+
+* **Node.js** v18+ installed
+* **npm** or **pnpm** installed
+* Free API keys from [Groq](https://groq.com) and [Vectorize Hindsight](https://ui.hindsight.vectorize.io)
 
-### 1. Clone & Install Dependencies
-
+### 1. Clone the Repository
 ```bash
-# From workspace root
-cd clientpulse-ai
+git clone https://github.com/yerrakaushik/ClientPusle.git
+cd ClientPusle
+```
 
-# Install server dependencies
+### 2. Configure Environment Variables
+Create a `.env` file in the `server` directory (or use `.env.example` as a template):
+```bash
+cp server/.env.example server/.env
+```
+
+Configure your API keys:
+```env
+HINDSIGHT_BASE_URL=https://api.hindsight.vectorize.io
+HINDSIGHT_API_KEY=your_hindsight_key_here
+HINDSIGHT_BANK_PREFIX=hok
+
+LLM_API_KEY=your_groq_api_key_here
+LLM_MODEL=openai/gpt-oss-120b
+
+PORT=5000
+```
+
+### 3. Install Dependencies
+```bash
+# Install root, backend, and frontend dependencies
+npm install
 cd server && npm install
-
-# Install client dependencies
 cd ../client && npm install
 cd ..
 ```
 
-### 2. Configure Environment Variables
-
-Copy `.env.example` to `.env`:
-
-```env
-# Vectorize Hindsight Cloud Configuration
-# Register at https://ui.hindsight.vectorize.io (Use promo code MEMHACK99 for $50 free credits)
-HINDSIGHT_BASE_URL=https://api.hindsight.vectorize.io
-HINDSIGHT_API_KEY=
-HINDSIGHT_BANK_PREFIX=clientpulse
-
-# LLM Configuration (Groq recommended for high-speed hackathon demos)
-# Get a free key at https://groq.com
-LLM_API_KEY=
-LLM_MODEL=llama-3.3-70b-versatile
-
-# Server Port
-PORT=5000
-```
-
-> **Note on Demo Mode**: If `HINDSIGHT_API_KEY` or `LLM_API_KEY` are not set, the application operates seamlessly in **Demo / Fallback Mode**. The built-in memory engine handles all `retain()`, `recall()`, and `reflect()` operations locally so your hackathon presentation never fails due to network dropouts or exhausted credits.
-
-### 3. Seed Initial Demo Data
-
+### 4. Run the Full-Stack Application
+Start both the backend API and frontend dev server:
 ```bash
-cd server
-npm run seed
-```
-
-This idempotently seeds **Acme Corp** with 5 historical interactions:
-1. Initial discovery: Cloud migration interest, security concern, budget ~₹20 lakh.
-2. Proposal rejection: Rejected first proposal due to generic pricing; liked three-phase plan.
-3. Security review: Requested detailed HIPAA/SOC2 architecture diagrams.
-4. Timeline requirements: Stressed predictable, zero-downtime milestones.
-5. Positive feedback: Approved three-phase migration approach with sandbox isolation.
-
-### 4. Start the Application
-
-Open two terminal windows:
-
-**Terminal 1 (Backend Server):**
-```bash
+# In terminal 1 (Backend):
 cd server
 npm run dev
-# Server runs on http://localhost:5000
-```
 
-**Terminal 2 (Frontend Client):**
-```bash
+# In terminal 2 (Frontend):
 cd client
 npm run dev
-# Vite UI runs on http://localhost:3000
 ```
 
-Open `http://localhost:3000` in your browser.
+Open **`http://localhost:3000`** in your browser to experience ClientPulse AI!
 
 ---
 
-## 5. Official REST API Specification
+## 🚢 Where & How to Publish This Project
 
-| Method | Endpoint | Description |
-| :--- | :--- | :--- |
-| `GET` | `/api/health` | Returns backend health, Hindsight connection status, and LLM provider |
-| `GET` | `/api/clients` | List all enterprise clients and their interaction counts |
-| `GET` | `/api/clients/:id` | Fetch specific client details |
-| `GET` | `/api/clients/:id/interactions` | Fetch historical timeline of meetings, calls, proposals |
-| `POST` | `/api/clients/:id/interactions` | Add new interaction & trigger Hindsight `retain()` |
-| `POST` | `/api/clients/:id/chat` | Ask relationship copilot questions grounded in Hindsight `recall()` |
-| `POST` | `/api/clients/:id/meeting-brief` | Synthesize meeting brief via Hindsight `recall()` + `reflect()` |
-| `GET` | `/api/clients/:id/memory` | Visual entity inspection of the client's memory bank |
-| `POST` | `/api/clients/:id/feedback` | Record `[Helpful]` / `[Not Helpful]` feedback and retain critique |
-| `POST` | `/api/seed` | Idempotent baseline re-seeding |
+You can publish and host this project completely free using the following platforms:
 
----
+### 1. Deploy the Frontend (Vercel / Netlify)
+* **Platform:** [Vercel](https://vercel.com) (Recommended) or [Netlify](https://netlify.com)
+* **Root Directory:** `client`
+* **Build Command:** `npm run build`
+* **Output Directory:** `dist`
+* **Environment Variables:**
+  * `VITE_API_URL`: Your deployed backend URL (or relative `/api` if using reverse proxy)
 
-## 6. 🏆 The 2–3 Minute Hackathon Demo Script (Judge Walkthrough)
-
-Follow this exact flow during your judging presentation for maximum points:
-
-### Minute 0:00 – The Problem (30s)
-> *"Judges, enterprise sales reps waste hours digging through old emails and CRM notes before meetings. Normal AI chatbots are stateless—they treat every meeting like day one. ClientPulse AI uses Vectorize Hindsight as a long-term memory layer so the AI remembers past objections, what worked, and gets smarter over time."*
-
-### Minute 0:30 – Step 1: Client Overview & Grounded Memory (45s)
-1. Click **Acme Corp** (Rahul Sharma, Healthcare Technology).
-2. Show the **Interactions Timeline**: Point out that Acme previously rejected a proposal because the pricing was too generic, but approved a three-phase migration framework.
-3. Switch to the **AI Assistant** tab and click the prompt:  
-   *"Why did Acme reject our previous proposal?"*
-4. Highlight the **"🧠 Memory consulted"** badge: The AI responds accurately from Hindsight memory with zero hallucination. Expand the **"Based on memory"** accordion to show the exact source records.
-
-### Minute 1:15 – Step 2: The Meeting Brief (30s)
-1. Click the **"Prepare Me for Meeting"** button.
-2. Show the generated **Meeting Brief**:
-   - Key Priorities: HIPAA Security, Zero Downtime.
-   - What to Avoid: Generic pricing decks.
-   - Strategy: Lead with the three-phase plan, then address security before custom pricing.
-
-### Minute 1:45 – Step 3: The Learning Demonstration (45s)
-1. Go to **Interactions** and click **"+ Add Interaction"** (or use the top-right **"Hackathon Demo Mode"** button).
-2. Enter:
-   - Type: `Call`
-   - Title: `Urgent Timeline Pivot`
-   - Content: *"Acme now says implementation time is their biggest concern. They want the migration completed within 90 days."*
-3. Click **"Save & Retain Memory"**. Notice the toast: *"Memory Retained in Hindsight"*.
-4. Now click **"Meeting Brief"** and hit **"Re-Generate Brief"**:
-   - **Point out the change**: The brief has dynamically adapted!
-   - Key Priority #1 is now: **⚡ Accelerated 90-Day Go-Live Window**.
-   - The strategy pivoted from a standard rollout to an accelerated milestone plan.
-
-### Minute 2:30 – Step 4: The Feedback Learning Loop (30s)
-1. Click **"Not Helpful"** on the brief.
-2. In the modal, explain: *"The recommendation focused too much on pricing; the client was actually more concerned about implementation time."*
-3. Click **"Retain Feedback to Memory"**.
-4. Switch to the **Hindsight Memory Panel**: Point out the **Recent Agent Learnings** card reflecting this feedback!
-5. Conclude: *"The agent didn't just store text—it internalized the outcome and adapted its future reasoning. That is AI powered by Hindsight."*
+### 2. Deploy the Backend API (Render / Railway / Azure)
+* **Platform Option A:** [Render](https://render.com) (Free Tier Web Service)
+  * **Root Directory:** `server`
+  * **Build Command:** `npm install && npm run build`
+  * **Start Command:** `npm start`
+* **Platform Option B:** [Railway](https://railway.app) (Fastest deployment)
+  * Point directly to `server` folder with Node.js template.
+* **Platform Option C:** [Azure App Service / Azure Container Apps](https://azure.microsoft.com)
+  * Best for Microsoft Hackathon submissions.
+* **Environment Variables to add in hosting dashboard:**
+  * `HINDSIGHT_BASE_URL`: `https://api.hindsight.vectorize.io`
+  * `HINDSIGHT_API_KEY`: Your Vectorize Hindsight Key
+  * `HINDSIGHT_BANK_PREFIX`: `hok`
+  * `LLM_API_KEY`: Your Groq API Key
+  * `LLM_MODEL`: `openai/gpt-oss-120b`
+  * `PORT`: `5000`
 
 ---
 
-## 7. Official Resources & References
+## 🏆 Hackathon Alignment (HackwithHyderabad 3.0)
 
-- **Hindsight Documentation**: [https://hindsight.vectorize.io/](https://hindsight.vectorize.io/)
-- **Hindsight GitHub**: [https://github.com/vectorize-io/hindsight](https://github.com/vectorize-io/hindsight)
-- **Hindsight Cloud**: [https://ui.hindsight.vectorize.io](https://ui.hindsight.vectorize.io) *(Promo code: `MEMHACK99` for $50 free credits)*
-- **Groq LLM Platform**: [https://groq.com](https://groq.com)
+| Hackathon Criterion | Weight | How ClientPulse AI Delivers |
+| :--- | :---: | :--- |
+| **Innovation & Vision** | **30%** | Replaces static CRM notes with an autonomous hindsight-learning agent that continuously evolves deal strategies from historical outcomes. |
+| **Hindsight Memory Centrality** | **25%** | Hindsight is not an add-on; every brief, risk signal, and response is directly generated via `retain`, `recall`, and `reflect` primitives. |
+| **Technical Robustness** | **20%** | Full TypeScript contracts, robust fallback gracefully handling network hiccups, zero mock placeholders, live Groq + Hindsight cloud integration. |
+| **User Experience & WOW UI** | **15%** | Dark glassmorphism, fluid interactive 12-month analytics, reactive toast memory events, and guided step-by-step walkthroughs. |
+| **Business Impact** | **10%** | Prevents multi-million dollar enterprise deal churn caused by repeating known pricing and timeline landmines. |
 
 ---
 
-## 8. License
-
-MIT License. Developed for HackwithHyderabad 3.0.
+## 📄 License
+This project is open-source and licensed under the [MIT License](LICENSE).
