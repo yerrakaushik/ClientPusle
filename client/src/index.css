@@ -8,10 +8,16 @@
     color: #f4f4f5;
     font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
     letter-spacing: -0.011em;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+
+  html.light body {
+    background-color: #f8fafc;
+    color: #0f172a;
   }
 }
 
-/* Custom scrollbars matching Shadcn template */
+/* Custom scrollbars */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -27,27 +33,26 @@
   background: rgba(161, 161, 170, 0.35);
 }
 
-/* Shadcn UI Card Tokens */
-.shadcn-card {
+html.light ::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.35);
+}
+html.light ::-webkit-scrollbar-thumb:hover {
+  background: rgba(100, 116, 139, 0.5);
+}
+
+/* Base Card Styles */
+.shadcn-card,
+.glass-panel {
   background-color: #111114;
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 0.75rem;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  transition: all 0.2s ease;
 }
 
-.shadcn-card-hover {
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-}
 .shadcn-card-hover:hover {
   border-color: rgba(255, 255, 255, 0.16);
   background-color: #141418;
-}
-
-/* Glass panel fallback */
-.glass-panel {
-  background: #111114;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 0.75rem;
 }
 
 .glass-panel-elevated {
@@ -55,4 +60,127 @@
   border: 1px solid rgba(0, 245, 160, 0.3);
   box-shadow: 0 16px 40px -10px rgba(0, 0, 0, 0.7);
   border-radius: 1rem;
+}
+
+/* ======================================================== */
+/* ☀️ BRIGHT MODE (LIGHT THEME) OVERRIDES                   */
+/* ======================================================== */
+
+html.light {
+  color-scheme: light;
+}
+
+/* Backgrounds */
+html.light .bg-obsidian-950,
+html.light .bg-\[\#09090b\] {
+  background-color: #ffffff !important;
+}
+
+html.light .bg-obsidian-900,
+html.light .bg-obsidian-850,
+html.light .bg-\[\#121215\],
+html.light .bg-\[\#111114\],
+html.light .bg-\[\#0e0e11\],
+html.light .bg-\[\#0f0f12\] {
+  background-color: #ffffff !important;
+}
+
+html.light .bg-obsidian-800,
+html.light .bg-\[\#18181b\],
+html.light .bg-\[\#16161b\],
+html.light .bg-zinc-800 {
+  background-color: #f1f5f9 !important;
+}
+
+html.light .bg-zinc-900 {
+  background-color: #f8fafc !important;
+}
+
+html.light main {
+  background-color: #f8fafc;
+}
+
+/* Borders */
+html.light .border-white\/\[0\.08\],
+html.light .border-white\/\[0\.06\],
+html.light .border-white\/\[0\.05\],
+html.light .border-\[\#27272a\],
+html.light .border-zinc-800,
+html.light .border-zinc-700 {
+  border-color: #e2e8f0 !important;
+}
+
+/* Text Colors */
+html.light .text-slate-100,
+html.light .text-slate-200,
+html.light .text-zinc-100,
+html.light .text-white {
+  color: #0f172a !important;
+}
+
+html.light .text-slate-300,
+html.light .text-zinc-300 {
+  color: #334155 !important;
+}
+
+html.light .text-slate-400,
+html.light .text-zinc-400,
+html.light .text-zinc-500 {
+  color: #64748b !important;
+}
+
+/* Hover States */
+html.light .hover\:bg-\[\#18181b\]:hover,
+html.light .hover\:bg-\[\#121215\]:hover,
+html.light .hover\:bg-obsidian-800:hover,
+html.light .hover\:bg-zinc-800:hover {
+  background-color: #f1f5f9 !important;
+  color: #0f172a !important;
+}
+
+/* Cards & Panels in Bright Mode */
+html.light .shadcn-card,
+html.light .glass-panel {
+  background-color: #ffffff !important;
+  border: 1px solid #e2e8f0 !important;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05) !important;
+}
+
+html.light .shadcn-card-hover:hover {
+  border-color: #cbd5e1 !important;
+  background-color: #f8fafc !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.05) !important;
+}
+
+html.light .glass-panel-elevated {
+  background-color: #ffffff !important;
+  border: 1px solid rgba(16, 185, 129, 0.4) !important;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Inputs & Textareas */
+html.light input,
+html.light textarea {
+  color: #0f172a !important;
+  background-color: #f8fafc !important;
+  border-color: #cbd5e1 !important;
+}
+
+html.light input::placeholder,
+html.light textarea::placeholder {
+  color: #94a3b8 !important;
+}
+
+/* Kbd Tags */
+html.light kbd {
+  background-color: #e2e8f0 !important;
+  color: #475569 !important;
+  border-color: #cbd5e1 !important;
+}
+
+/* Active tab buttons in Bright Mode */
+html.light button.bg-white.text-zinc-950 {
+  background-color: #0f172a !important;
+  color: #ffffff !important;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1) !important;
 }

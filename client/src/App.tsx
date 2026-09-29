@@ -29,6 +29,35 @@ export function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
+  const [theme, setTheme] = useState<'dark' | 'light'>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('clientpulse_theme');
+      if (saved === 'light' || saved === 'dark') return saved;
+    }
+    return 'dark';
+  });
+
+  useEffect(() => {
+    const root = document.documentElement;
+    if (theme === 'light') {
+      root.classList.remove('dark');
+      root.classList.add('light');
+    } else {
+      root.classList.remove('light');
+      root.classList.add('dark');
+    }
+    localStorage.setItem('clientpulse_theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    const next = theme === 'dark' ? 'light' : 'dark';
+    setTheme(next);
+    addToast(
+      'success',
+      next === 'light' ? 'Bright Mode Enabled' : 'Dark Mode Enabled',
+      `Switched display theme to ${next === 'light' ? 'Bright / Light' : 'Dark'} mode.`
+    );
+  };
 
   const addToast = (type: 'success' | 'memory' | 'error', title: string, message: string) => {
     const id = `toast-${Date.now()}-${Math.random()}`;
@@ -272,6 +301,8 @@ export function App() {
           onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
           searchQuery={searchQuery}
           onSearchChange={setSearchQuery}
+          theme={theme}
+          onToggleTheme={toggleTheme}
         />
 
         {/* Non-intrusive floating Guide Popover */}

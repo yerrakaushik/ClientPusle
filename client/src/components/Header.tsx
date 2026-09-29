@@ -8,6 +8,7 @@ import {
   Search, 
   Command,
   Sun,
+  Moon,
   Github,
   Layers,
   Globe
@@ -23,6 +24,8 @@ interface HeaderProps {
   onToggleSidebar: () => void;
   searchQuery: string;
   onSearchChange: (q: string) => void;
+  theme: 'dark' | 'light';
+  onToggleTheme: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -34,6 +37,8 @@ export const Header: React.FC<HeaderProps> = ({
   onToggleSidebar,
   searchQuery,
   onSearchChange,
+  theme,
+  onToggleTheme,
 }) => {
   return (
     <header className="sticky top-0 z-20 w-full bg-[#09090b] border-b border-[#27272a] h-14">
@@ -89,13 +94,27 @@ export const Header: React.FC<HeaderProps> = ({
               <span>User Guide</span>
             </button>
 
+            {/* Theme Toggle (Bright Mode / Dark Mode) */}
+            <button
+              onClick={onToggleTheme}
+              title={theme === 'dark' ? "Switch to Bright Mode" : "Switch to Dark Mode"}
+              className="p-1.5 rounded-md hover:bg-[#18181b] text-zinc-400 hover:text-white transition-colors flex items-center justify-center"
+            >
+              {theme === 'dark' ? (
+                <Sun className="w-4 h-4 text-amber-400 hover:text-amber-300 transition-transform duration-200 hover:rotate-45" />
+              ) : (
+                <Moon className="w-4 h-4 text-indigo-500 hover:text-indigo-400 transition-transform duration-200 hover:-rotate-12" />
+              )}
+            </button>
+
+            {/* Reset Baseline Seed */}
             <button
               onClick={onResetSeed}
               disabled={isSeeding}
-              title="Reset Baseline Seed"
+              title="Reset Baseline Seed Data"
               className="p-1.5 rounded-md hover:bg-[#18181b] text-zinc-400 hover:text-white transition-colors"
             >
-              <Sun className={`w-4 h-4 ${isSeeding ? 'animate-spin' : ''}`} />
+              <RefreshCw className={`w-3.5 h-3.5 ${isSeeding ? 'animate-spin text-emerald-400' : ''}`} />
             </button>
           </div>
         </div>
