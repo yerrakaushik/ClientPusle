@@ -341,6 +341,11 @@ export function App() {
                 setActiveTab('overview');
               }}
               totalMemoriesCount={memoryData?.rawCount || 5}
+              onAddClient={(newClient) => {
+                setClients((prev) => [newClient, ...prev]);
+                setSelectedClientId(newClient.id);
+              }}
+              onShowToast={addToast}
             />
           )}
         </main>

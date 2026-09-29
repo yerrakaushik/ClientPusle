@@ -72,8 +72,9 @@ html.light {
 
 /* Backgrounds */
 html.light .bg-obsidian-950,
-html.light .bg-\[\#09090b\] {
-  background-color: #ffffff !important;
+html.light .bg-\[\#09090b\],
+html.light .bg-slate-950 {
+  background-color: #f8fafc !important;
 }
 
 html.light .bg-obsidian-900,
@@ -81,13 +82,17 @@ html.light .bg-obsidian-850,
 html.light .bg-\[\#121215\],
 html.light .bg-\[\#111114\],
 html.light .bg-\[\#0e0e11\],
-html.light .bg-\[\#0f0f12\] {
+html.light .bg-\[\#0f0f12\],
+html.light .bg-\[\#141418\],
+html.light .bg-slate-900 {
   background-color: #ffffff !important;
 }
 
 html.light .bg-obsidian-800,
 html.light .bg-\[\#18181b\],
 html.light .bg-\[\#16161b\],
+html.light .bg-\[\#1c1c21\],
+html.light .bg-\[\#0d0d10\],
 html.light .bg-zinc-800 {
   background-color: #f1f5f9 !important;
 }
@@ -100,13 +105,36 @@ html.light main {
   background-color: #f8fafc;
 }
 
+/* Gradients in Light Mode (revert dark gradients to clean surfaces) */
+html.light .bg-gradient-to-r,
+html.light .bg-gradient-to-br,
+html.light .bg-gradient-to-tr,
+html.light .bg-gradient-to-b,
+html.light .from-obsidian-900,
+html.light .from-obsidian-950,
+html.light .via-obsidian-850,
+html.light .via-obsidian-900,
+html.light .to-obsidian-900,
+html.light .to-obsidian-950,
+html.light .from-aurora\/5 {
+  background-image: none !important;
+  background-color: #ffffff !important;
+}
+
 /* Borders */
 html.light .border-white\/\[0\.08\],
 html.light .border-white\/\[0\.06\],
 html.light .border-white\/\[0\.05\],
+html.light .border-white\/\[0\.1\],
+html.light .border-white\/\[0\.15\],
+html.light .border-white\/\[0\.2\],
 html.light .border-\[\#27272a\],
 html.light .border-zinc-800,
-html.light .border-zinc-700 {
+html.light .border-zinc-700,
+html.light .border-zinc-600,
+html.light .border-aurora\/30,
+html.light .border-aurora\/25,
+html.light .border-aurora\/20 {
   border-color: #e2e8f0 !important;
 }
 
@@ -114,19 +142,118 @@ html.light .border-zinc-700 {
 html.light .text-slate-100,
 html.light .text-slate-200,
 html.light .text-zinc-100,
+html.light .text-zinc-200,
 html.light .text-white {
   color: #0f172a !important;
 }
 
 html.light .text-slate-300,
 html.light .text-zinc-300 {
-  color: #334155 !important;
+  color: #1e293b !important;
 }
 
 html.light .text-slate-400,
 html.light .text-zinc-400,
 html.light .text-zinc-500 {
-  color: #64748b !important;
+  color: #475569 !important;
+}
+
+/* HIGH-CONTRAST READABILITY OVERRIDES FOR LIGHT MODE */
+html.light .text-emerald-200 {
+  color: #064e3b !important; /* deep forest emerald */
+  font-weight: 600 !important;
+}
+html.light .text-emerald-300 {
+  color: #047857 !important;
+  font-weight: 600 !important;
+}
+html.light .text-emerald-400 {
+  color: #047857 !important;
+  font-weight: 700 !important;
+}
+
+html.light .text-amber-200 {
+  color: #78350f !important; /* deep rich bronze */
+  font-weight: 600 !important;
+}
+html.light .text-amber-300 {
+  color: #92400e !important;
+  font-weight: 600 !important;
+}
+html.light .text-amber-400 {
+  color: #b45309 !important;
+  font-weight: 700 !important;
+}
+
+html.light .text-rose-200 {
+  color: #881337 !important; /* deep crimson */
+  font-weight: 600 !important;
+}
+html.light .text-rose-300 {
+  color: #9f1239 !important;
+  font-weight: 600 !important;
+}
+html.light .text-rose-400 {
+  color: #be123c !important;
+  font-weight: 700 !important;
+}
+
+html.light .text-cyan-200 {
+  color: #164e63 !important; /* deep oceanic cyan */
+  font-weight: 600 !important;
+}
+html.light .text-cyan-300 {
+  color: #0e7490 !important;
+  font-weight: 600 !important;
+}
+html.light .text-cyan-400 {
+  color: #0e7490 !important;
+  font-weight: 700 !important;
+}
+
+html.light .text-aurora {
+  color: #047857 !important; /* crisp readable dark emerald */
+  font-weight: 700 !important;
+}
+
+/* High-Contrast Pill Backgrounds in Light Mode */
+html.light .bg-emerald-500\/10,
+html.light .bg-emerald-950\/20,
+html.light .bg-emerald-950\/30 {
+  background-color: #ecfdf5 !important;
+  border-color: #a7f3d0 !important;
+}
+
+html.light .bg-amber-500\/10,
+html.light .bg-amber-500\/15,
+html.light .bg-amber-950\/20,
+html.light .bg-amber-950\/30 {
+  background-color: #fffbeb !important;
+  border-color: #fde68a !important;
+}
+
+html.light .bg-rose-500\/10,
+html.light .bg-rose-950\/20,
+html.light .bg-rose-950\/30 {
+  background-color: #fff1f2 !important;
+  border-color: #fecdd3 !important;
+}
+
+html.light .bg-cyan-500\/10,
+html.light .bg-cyan-950\/20 {
+  background-color: #ecfeff !important;
+  border-color: #a5f3fc !important;
+}
+
+html.light .bg-aurora\/10 {
+  background-color: #ecfdf5 !important;
+  border-color: #a7f3d0 !important;
+}
+
+html.light .bg-aurora\/15,
+html.light .bg-aurora\/20 {
+  background-color: #d1fae5 !important;
+  border-color: #6ee7b7 !important;
 }
 
 /* Hover States */
@@ -160,9 +287,10 @@ html.light .glass-panel-elevated {
 
 /* Inputs & Textareas */
 html.light input,
-html.light textarea {
+html.light textarea,
+html.light select {
   color: #0f172a !important;
-  background-color: #f8fafc !important;
+  background-color: #ffffff !important;
   border-color: #cbd5e1 !important;
 }
 
@@ -183,4 +311,8 @@ html.light button.bg-white.text-zinc-950 {
   background-color: #0f172a !important;
   color: #ffffff !important;
   box-shadow: 0 1px 3px rgba(0,0,0,0.1) !important;
+}
+html.light button.bg-white.text-zinc-950:hover {
+  background-color: #1e293b !important;
+  color: #ffffff !important;
 }
